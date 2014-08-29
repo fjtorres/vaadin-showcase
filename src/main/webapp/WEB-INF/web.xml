@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	
+	<display-name>Showcase - Vaadin</display-name>
+
+	<!-- Spring -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:*META-INF/spring/applicationContext*.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<description>Vaadin production mode</description>
+		<param-name>productionMode</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<!-- Main Vaadin servlet -->
+	<servlet>
+		<servlet-name>Main Vaadin Servlet</servlet-name>
+		<servlet-class>es.fjtorres.pruebas.vaadin.spring.SpringVaadinServlet</servlet-class>
+		<init-param>
+			<param-name>beanName</param-name>
+			<param-value>spring-ui</param-value>
+		</init-param>
+		<!-- <init-param> -->
+		<!-- <param-name>systemMessagesBeanName</param-name> -->
+		<!-- <param-value>DEFAULT</param-value> -->
+		<!-- </init-param> -->
+		<load-on-startup>10</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Main Vaadin Servlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Main Vaadin Servlet</servlet-name>
+		<url-pattern>/VAADIN/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- Static mapping -->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/static/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>
